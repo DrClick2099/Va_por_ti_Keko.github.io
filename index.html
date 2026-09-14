@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscripción - Picacho Vertical | Va por ti Keko</title>
+    <style>
+        :root {
+            --primary-yellow: #f8c300;
+            /* Tarjeta principal calibrada al 35% */
+            --dark-card: rgba(10, 10, 10, 0.35);
+            --border-color: rgba(248, 195, 0, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.3)),
+                        url('Gemini_Generated_Image_8y0m6s8y0m6s8y0m.jpg') no-repeat center top fixed;
+            background-size: cover;
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 24px 12px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 760px;
+            background: var(--dark-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 28px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary-yellow);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: var(--primary-yellow);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 800;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+        }
+
+        header p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
+        }
+
+        .badge-cause {
+            display: inline-block;
+            background-color: rgba(0, 0, 0, 0.55);
+            color: var(--primary-yellow);
+            border: 1px solid var(--primary-yellow);
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 700;
+            color: #fff;
+            font-size: 0.95rem;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select,
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background-color: rgba(15, 15, 15, 0.35);
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        select option,
+        select optgroup {
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        select:focus {
+            border-color: var(--primary-yellow);
+            background-color: rgba(20, 20, 20, 0.6);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--primary-yellow);
+            color: #121212;
+            font-weight: 800;
+            font-size: 1.05rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(248, 195, 0, 0.35);
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #e5b300;
+        }
+
+        .btn-submit:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+
+        /* Panel Exclusivo Administrador */
+        .admin-section {
+            margin-top: 40px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.25);
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        .btn-admin-toggle {
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid #666;
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-admin-toggle:hover {
+            border-color: var(--primary-yellow);
+            color: var(--primary-yellow);
+        }
+
+        .admin-box {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+            background: rgba(10, 10, 10, 0.5);
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .admin-auth-row {
+            display: flex;
+            gap: 10px;
+            max-width: 420px;
+            margin-bottom: 15px;
+        }
+
+        .btn-auth {
+            padding: 10px 18px;
+            background-color: var(--primary-yellow);
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #111;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        th {
+            background-color: rgba(30, 30, 30, 0.6);
+            color: var(--primary-yellow);
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.04);
+        }
+
+        a.link-proof {
+            color: var(--primary-yellow);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <header>
+        <h1>Picacho Vertical</h1>
+        <p>Trail Running con Causa - Domingo 11 de Octubre</p>
+        <span class="badge-cause">Va por ti Keko | Cuota: $350</span>
+    </header>
+
+    <form id="registroForm">
+        <div class="form-group">
+            <label for="nombre">Nombre Completo:</label>
+            <input type="text" id="nombre" required placeholder="Ej. Juan Pérez López">
+        </div>
+
+        <div class="form-group">
+            <label for="talla">Talla de Playera:</label>
+            <select id="talla" required>
+                <option value="">-- Selecciona una talla --</option>
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="2XL">2XL</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="distancia">Distancia:</label>
+            <select id="distancia" required>
+                <option value="">-- Selecciona distancia --</option>
+                <option value="6 km">6 km (Estacionamiento - Manos del muerto)</option>
+                <option value="11 km">11 km (Estacionamiento - Nariz del muerto)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="categoria">Categoría:</label>
+            <select id="categoria" required>
+                <option value="">-- Selecciona categoría --</option>
+                <optgroup label="Rama Femenil">
+                    <option value="Femenil General">Femenil General</option>
+                    <option value="Femenil Sub 20">Femenil Sub 20</option>
+                    <option value="Femenil 20-29">Femenil 20 - 29</option>
+                    <option value="Femenil 30-39">Femenil 30 - 39</option>
+                    <option value="Femenil 40-49">Femenil 40 - 49</option>
+                    <option value="Femenil 50 y más">Femenil 50 y más</option>
+                </optgroup>
+                <optgroup label="Rama Varonil">
+                    <option value="Varonil General">Varonil General</option>
+                    <option value="Varonil Sub 20">Varonil Sub 20</option>
+                    <option value="Varonil 20-29">Varonil 20 - 29</option>
+                    <option value="Varonil 30-39">Varonil 30 - 39</option>
+                    <option value="Varonil 40-49">Varonil 40 - 49</option>
+                    <option value="Varonil 50 y más">Varonil 50 y más</option>
+                </optgroup>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="evidencia">Comprobante de Pago (Imagen o PDF):</label>
+            <input type="file" id="evidencia" accept="image/*,application/pdf" required>
+        </div>
+
+        <button type="submit" class="btn-submit" id="btnSubmit">Registrar Inscripción</button>
+    </form>
+
+    <!-- Panel Administrador Oculto -->
+    <div class="admin-section">
+        <button type="button" class="btn-admin-toggle" onclick="toggleAdminPanel()">🔒 Acceso Administrador</button>
+        
+        <div class="admin-box" id="adminBox">
+            <div id="authContainer">
+                <p style="margin-bottom: 8px; font-size: 0.9rem; color: #ccc;">Ingresa tu clave de administrador para consultar registros:</p>
+                <div class="admin-auth-row">
+                    <input type="password" id="adminPass" placeholder="Contraseña">
+                    <button type="button" class="btn-auth" onclick="verificarAcceso()">Entrar</button>
+                </div>
+            </div>
+
+            <div id="listaInscritosContainer" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="font-size: 1.2rem; color: var(--primary-yellow);">Participantes Inscritos</h2>
+                    <button type="button" onclick="obtenerInscritos()" style="background: rgba(0,0,0,0.5); border: 1px solid #666; color: #fff; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Actualizar</button>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Talla</th>
+                                <th>Distancia</th>
+                                <th>Categoría</th>
+                                <th>Comprobante</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaBody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: #bbb;">Cargando inscritos...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz1t--4N3wpryQ1QwTrSldH6EQef5_XhMZXeKaaHV7xPzyPMl19kuWFGDI6jU-Y3tE/exec";
+    const ADMIN_PIN = "1234";
+
+    document.getElementById('registroForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const btn = document.getElementById('btnSubmit');
+        btn.disabled = true;
+        btn.innerText = "Subiendo registro...";
+
+        const fileInput = document.getElementById('evidencia');
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+            const payload = {
+                nombre: document.getElementById('nombre').value,
+                talla: document.getElementById('talla').value,
+                distancia: document.getElementById('distancia').value,
+                categoria: document.getElementById('categoria').value,
+                fileName: file ? file.name : '',
+                fileMimeType: file ? file.type : '',
+                fileData: file ? event.target.result : ''
+            };
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                alert('¡Inscripción recibida correctamente!');
+                document.getElementById('registroForm').reset();
+                btn.disabled = false;
+                btn.innerText = "Registrar Inscripción";
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Ocurrió un error al enviar.');
+                btn.disabled = false;
+                btn.innerText = "Registrar Inscripción";
+            });
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            reader.onload();
+        }
+    });
+
+    function toggleAdminPanel() {
+        const box = document.getElementById('adminBox');
+        box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function verificarAcceso() {
+        const input = document.getElementById('adminPass').value;
+        if (input === ADMIN_PIN) {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('listaInscritosContainer').style.display = 'block';
+            obtenerInscritos();
+        } else {
+            alert('Contraseña incorrecta.');
+        }
+    }
+
+    function obtenerInscritos() {
+        if (!WEB_APP_URL || WEB_APP_URL.includes("REEMPLAZA")) {
+            document.getElementById('tablaBody').innerHTML = '<tr><td colspan="5" style="text-align:center; color:#ddd;">Conecta tu URL de Apps Script para listar participantes.</td></tr>';
+            return;
+        }
+
+        document.getElementById('tablaBody').innerHTML = '<tr><td colspan="5" style="text-align:center; color:#ddd;">Consultando hoja de cálculo...</td></tr>';
+
+        fetch(WEB_APP_URL)
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tablaBody');
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No hay registros todavía.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = data.map(item => `
+                    <tr>
+                        <td>${item.nombre}</td>
+                        <td>${item.talla}</td>
+                        <td>${item.distancia}</td>
+                        <td>${item.categoria}</td>
+                        <td><a href="${item.evidencia}" target="_blank" class="link-proof">Ver</a></td>
+                    </tr>
+                `).join('');
+            })
+            .catch(() => {
+                document.getElementById('tablaBody').innerHTML = '<tr><td colspan="5" style="text-align:center; color:#ddd;">No se pudo sincronizar la lista en vivo.</td></tr>';
+            });
+    }
+</script>
+</body>
+</html>
